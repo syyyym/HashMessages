@@ -28,4 +28,37 @@ A simple api system that calculates and manages Sha256 hashes and show if a stri
 > "err_msg": "Message not found"
 > }
 
+
+---
+
+## Usage
+
+Running: 
+
+`DBPWD=<dbpassword> node app.js`
+
+Test:
+
+open browser and navigate to `<IP>/` or
+
+`http://<IP>:8080/messages`
+
+`http://<IP>:8080/messages/12...`
+
 ----
+
+
+## Screenshots
+
+
+![messages-page](images/messages-page.png)
+
+
+![hash-page](images/message-returned.png)
+
+
+![message-returned](images/hash-page.png)
+
+
+
+---

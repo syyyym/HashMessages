@@ -47,6 +47,19 @@ open browser and navigate to `<IP>/` or
 
 ----
 
+## Usage with Docker
+
+Build an image:
+
+`docker build -t node-vanilla -f Dockerfile .`
+
+Run the container:
+
+`docker run -it --rm -p 8080:8080 -v $PWD:/root/ node-vanilla`
+
+
+----
+
 
 ## Screenshots
 

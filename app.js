@@ -14,42 +14,45 @@ const mongo = require('mongodb');
 const parser = require('body-parser');
 const crypto = require('crypto');
 const app = express();
-const router = new express.Router();
+// const router = new express.Router();
 require('dotenv').config();
 
 
-// The secret db password
-const DBPWD = process.env.DBPWD ? process.env.DBPWD : process.argv[2];
-
-// The db connection
+// Db connection
 const DBHOST = 'cluster0-dnnzf.mongodb.net';
 const DBACC  = 'sim';
 const MLABACC= 'hashdb';
 
+// Secret db password
+const DBPWD = process.env.DBPWD ? process.env.DBPWD : process.argv[2];
+//Database connection
 mongo.connect('mongodb+srv://' + DBACC + ':' + DBPWD + '@' +DBHOST+ '/' + MLABACC + '?retryWrites=true', { useUnifiedTopology: true }, (e,dbcli)=>{
 	if(e) { console.log(e); return false; }
 	db = dbcli.db('andy-bit');
 	var server = app.listen(8080, ()=>{console.log("http://localhost:8080");})
 });
 
+//Serve static assets
+app.use(express.static('public'));
+app.set('view engine','ejs');
+
 // Index page as in domain.com/
 app.get('/', (req,res)=>{
-	res.send('<html><head><title>Index</title></head><body>'+
-	'<b>Move along, nothing to see here!</b> <a href="/messages">form</a>?'+
-	'</body></body></html>');
+	//messages page is the home page
+	res.redirect('/messages');
 }).post('/', (req,res)=>{ res.status(404).end('404'); });
+
 // Create router for /messages and /messages/HASH
 app.use(parser.urlencoded({extended:true}))
-	.use('/messages', router);
-// Create form and db save function
-router.get('', (req,res)=>{
-	res.send('<html><head><title>Sha</title></head><body>'+
-	'<h2>Submit message for sha256 hashing and saving</h2>'+
-	'<form action="/messages" method="POST">'+
-	'<input placeholder="foo" name="message">'+
-	'<button type="submit">Submit</button>'+
-	'</form></body></body></html>');
-}).post('', (req,res)=>{
+
+
+// app.use('/messages', router);
+
+	// Create form and db save function
+app.get('/messages', (req,res)=>{
+	res.sendFile( __dirname + '/views/index.html' );
+});
+app.post('/messages', (req,res)=>{
 	let message = req.body.message;
 	let hash = crypto.createHash('sha256').update(message).digest('hex');
 	let ms = db.collection('messages');
@@ -58,15 +61,23 @@ router.get('', (req,res)=>{
 		if (r.length==0) {
 			ms.insertOne({message:message,hash:hash},(err,rep)=>{
 				if (err) { console.log(0); return false; }
-				res.send(/*'Not saved before ' +*/ hash);
+				//res.send(/*'Not saved before ' +*/ hash);
+				res.send('<html><head><title>Index</title></head><body>' +
+					'<b>SHA256 Hash of your string:</b><br><br>' + hash +
+					'</body></body></html>');
 			});
 		} else {
-			res.send(/*'Already found ' +*/ hash);
+			//res.send(/*'Already found ' +*/ hash);
+			res.send('<html><head><title>Index</title></head><body>' +
+				'<b>SHA256 Hash of your string:</b><br><br>' + hash +
+				'</body></body></html>');
+
 		}
 	});
 });
+
 // Get the GET hash and spit out the original msg or else show 404 error
-router.get('/:hash([a-fA-F0-9]+)', (req,res)=>{
+app.get('/messages/:hash([a-fA-F0-9]+)', (req,res)=>{
 	res.set({'Content-Type': 'application/json'});
 	let hash = req.params.hash;
 	// Find and get msg. 
@@ -82,6 +93,9 @@ router.get('/:hash([a-fA-F0-9]+)', (req,res)=>{
 			}
 		} else {res.send('["connection_error"]')}
 	});
-}).post('/:hash', (req,res)=>{
-	res.send("No POST allowed, just GET");
 });
+
+app.post('/messages/hashing', (req,res)=>{	
+	let hash = req.body.hash;
+	res.redirect('/messages/' + hash );
+})

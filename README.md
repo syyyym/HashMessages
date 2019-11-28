@@ -6,6 +6,11 @@ An API system that calculates and manages SHA256 hashes and shows if a string al
 
 ## Description
 
+
+### UI
+
+> Design a UI interface for hashing a string message and saving it in the database, and for retrieving the message from the database based on the Sha256 hash.
+
 ### API
 
 > Publish a small service on the web that has two endpoints:
@@ -29,11 +34,6 @@ An API system that calculates and manages SHA256 hashes and shows if a string al
 > {
 > "err_msg": "Message not found"
 > }
-
-
-### UI
-
-> Design a UI interface for hashing a string message and saving it in the database, and for retrieving the message from the database based on the Sha256 hash.
 
 ---
 
@@ -69,20 +69,6 @@ Run the container:
 
 ## Screenshots
 
-### API
-
-
-
-![messages-page](images/api/api-get-hash-for-message.png)
-
-
-![hash-page](images/api/api-hash-from-message.png)
-
-
-![message-returned](images/api/api-message-from-hash.png)
-
-![error-message](images/api/api-error-message.png)
-
 
 ### UI
 
@@ -97,5 +83,21 @@ Run the container:
 ![message-returned](images/ui/ui-message-from-hash.png)
 
 ![error-message](images/ui/ui-error-page.png)
+
+
+### API
+
+
+
+
+![messages-page](images/api/api-get-hash-for-message.png)
+
+
+![hash-page](images/api/api-hash-from-message.png)
+
+
+![message-returned](images/api/api-message-from-hash.png)
+
+![error-message](images/api/api-error-message.png)
 
 ---

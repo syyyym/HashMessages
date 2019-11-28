@@ -4,29 +4,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hash Page</title>
   <link rel="stylesheet" href="./font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
+<body onload="wordWrapFunc()">
   <div class="py-3 text-center">
     <div class="container">
       <div class="row">
         <div class="mx-auto p-4 col-md-7"
           style="	background-image: linear-gradient(to bottom, rgba(200, 200, 200, 0.25), rgba(120, 120, 120, 0.55));	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
           <h1 class="mb-4">SHA256 Hash of your string</h1>
-          <h3 class="text-left">Hash:</h3>
-          <p class="text-left"><%= hash %> <br></p>
-          <h4 class="text-left">of message:</h4>
-          <p class="text-left"><%= message %> <br></p>
           <div class="text-left">
-              <a class="btn btn-primary" href="/ui">Back</a>
+            <h3>Hash:</h3>
+            <span id="hashText" class="text-left"><%= hash %></span>
+            <button name="" id="my_button" type="button"
+              class="button copy-command-button copy-command-button-is-not-uppercase copy-command-button-has-left-margin"
+              onclick="copyToClipboard_div()">Copy</button>
+              <br/><br>
+            <h4>Message:</h4>
+            <p><%= message %> <br></p>
+            <a class="btn btn-primary" href="/ui">Back</a>
           </div>
         </div>
       </div>
     </div>
 
   </div>
+
+  <script>
+
+    function copyToClipboard_div() {
+      let textarea = document.createElement('textarea')
+      textarea.id = 't'
+      textarea.style.height = 0
+      document.body.appendChild(textarea)
+      textarea.value = document.getElementById("hashText").innerText
+      let selector = document.querySelector('#t')
+      selector.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+    }
+    function wordWrapFunc() {
+      document.getElementById("hashText").style.wordWrap = "break-word";
+    }    
+  </script>
 </body>
 
 </html>

@@ -1,10 +1,12 @@
 # NodeJS Backend Script To Calculate and Manage Hashes
 
-A simple api system that calculates and manages Sha256 hashes and show if a string like a potential password already exists in the system.
+An API system that calculates and manages SHA256 hashes and shows if a string already exists in the system.
 
 ----
 
 ## Description
+
+### API
 
 > Publish a small service on the web that has two endpoints:
 >
@@ -28,6 +30,10 @@ A simple api system that calculates and manages Sha256 hashes and show if a stri
 > "err_msg": "Message not found"
 > }
 
+
+### UI
+
+> Design a UI interface for hashing a string message and saving it in the database, and for retrieving the message from the database based on the Sha256 hash.
 
 ---
 
@@ -63,15 +69,33 @@ Run the container:
 
 ## Screenshots
 
-
-![messages-page](images/messages-page.png)
-
-
-![hash-page](images/message-returned.png)
+### API
 
 
-![message-returned](images/hash-page.png)
+
+![messages-page](images/api/api-get-hash-for-message.png)
 
 
+![hash-page](images/api/api-hash-from-message.png)
+
+
+![message-returned](images/api/api-message-from-hash.png)
+
+![error-message](images/api/api-error-message.png)
+
+
+### UI
+
+
+![messages-page](images/ui/ui-text-message.png)
+
+
+![hash-page](images/ui/ui-hash-page.png)
+
+![messages-page](images/ui/ui-get-message-from-hash.png)
+
+![message-returned](images/ui/ui-message-from-hash.png)
+
+![error-message](images/ui/ui-error-page.png)
 
 ---

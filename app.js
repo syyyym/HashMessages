@@ -42,11 +42,13 @@ app.set('view engine','ejs');
 app.use(parser.urlencoded({extended:true}))
 
 //endpoints
-app.use('/', indexRouter);
+
 app.use('/api/messages', apiRouter);
 app.use('/ui', uiRouter);
+app.use('/', indexRouter);
 
 app.use((req, res) =>{
+	res.status(404);
 	let errmsg = "No such route";
 		res.render('errorpage', {
 		errmsg: errmsg

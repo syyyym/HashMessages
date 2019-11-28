@@ -46,4 +46,9 @@ router.get('/:hash([a-fA-F0-9]+)', (req,res)=>{
 	res.send("No POST allowed, just GET");
 });
 
+router.use( (req, res) => {
+	const errmsg = 'Message not found';
+	res.status(404).send(JSON.stringify({err_msg:errmsg},null,' '));
+})
+
 module.exports = router;

@@ -54,12 +54,14 @@ router.post('/hashing', (req,res, next)=>{
 					message: r[0].message
 				});				
 			} else if (r.length==0) {
+				res.status(404);
 				errmsg = 'Message not found';
 				res.render('errorpage', {
 					errmsg: errmsg
 				});	
 			}
 		} else {
+			res.status(503);
 			errmsg = 'Connection error';
 			res.render('errorpage', {
 				errmsg: errmsg

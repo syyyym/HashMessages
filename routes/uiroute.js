@@ -45,6 +45,7 @@ router.post('/hashing', (req,res, next)=>{
 	db.collection('messages')
 	.find({hash:hash},{projection:{_id:0,hash:0}}).limit(1)
 	.toArray((e,r)=>{
+		let errmsg = "";
 		if (!e) {
 			if (r.length) {
 				let message = r[0].message;
@@ -53,12 +54,17 @@ router.post('/hashing', (req,res, next)=>{
 					message: r[0].message
 				});				
 			} else if (r.length==0) {
-				const errmsg = 'Message not found';
+				errmsg = 'Message not found';
 				res.render('errorpage', {
 					errmsg: errmsg
 				});	
 			}
-		} else {res.send('["connection_error"]')}
+		} else {
+			errmsg = 'Connection error';
+			res.render('errorpage', {
+				errmsg: errmsg
+			});	
+		}
 	});
 });
 

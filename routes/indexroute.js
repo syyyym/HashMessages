@@ -6,4 +6,8 @@ router.get('/', (req, res) => {
 	res.redirect('/ui');
 });
 
+router.get('/api', (req, res) => {
+	res.redirect('/api/messages');
+});
+
 module.exports = router;

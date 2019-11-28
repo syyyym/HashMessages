@@ -32,9 +32,11 @@ const DBPWD = process.env.DBPWD ? process.env.DBPWD : process.argv[2];
 //Database connection
 mongo.connect('mongodb+srv://' + DBACC + ':' + DBPWD + '@' +DBHOST+ '/' + MLABACC + '?retryWrites=true', { useUnifiedTopology: true }, (e,dbcli)=>{
 	if(e) { console.log(e); return false; }
-	db = dbcli.db('andy-bit');
-	var server = app.listen(8080, ()=>{console.log("http://localhost:8080");})
+	db = dbcli.db('hashdb');	
+	const server = app.listen(8080, ()=>{console.log("Connected to http://localhost:8080");})
 });
+
+app.use(express.static('public'));
 
 app.set('view engine','ejs');
 app.use(parser.urlencoded({extended:true}))
@@ -43,3 +45,10 @@ app.use(parser.urlencoded({extended:true}))
 app.use('/', indexRouter);
 app.use('/api/messages', apiRouter);
 app.use('/ui', uiRouter);
+
+app.use((req, res) =>{
+	let errmsg = "No such route";
+		res.render('errorpage', {
+		errmsg: errmsg
+	});	
+})
